@@ -1,0 +1,156 @@
+body {
+    font-family: 'Segoe UI', Arial;
+    margin: 0;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #fff;
+}
+
+/* Main Card - BIG WIDTH */
+.container,
+.card {
+    background: #1e1e2f;
+    color: #fff;
+    width: 1100px;
+    max-width: 95%;
+    margin: 40px auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+/* Auth pages */
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.auth-card {
+    background: #1e1e2f;
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 340px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.5);
+}
+
+/* Inputs */
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: #2c2c3e;
+    border: none;
+    color: white;
+    border-radius: 8px;
+}
+
+/* Buttons */
+button {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    font-weight: bold;
+}
+
+button:hover {
+    transform: scale(1.03);
+    background: linear-gradient(45deg, #5a6ee1, #6a3fa0);
+}
+
+/* Question list */
+li {
+    background: #2c2c3e;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+/* important tag */
+.tag {
+    color: #ff4d4d;
+    font-weight: bold;
+}
+
+/* AI Answer box - BIG + SCROLLABLE */
+.ai-answer {
+    background: #111827;
+    color: #e5e7eb;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 15px;
+    line-height: 1.8;
+    border-left: 4px solid #667eea;
+    font-size: 16px;
+
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* headings */
+.ai-answer h2,
+.ai-answer h3,
+.ai-answer h4 {
+    color: #8ab4ff;
+}
+
+/* list */
+.ai-answer ul {
+    margin-left: 20px;
+}
+
+/* hover animation */
+.card:hover {
+    transform: translateY(-5px);
+    transition: 0.3s;
+}
+
+/* Better spacing */
+h1, h2, h3 {
+    margin-top: 0;
+}
+
+/* mobile responsive */
+@media (max-width: 768px) {
+    .container,
+    .card {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .ai-answer {
+        max-height: 400px;
+    }
+}
+.bottom-nav {
+position: fixed;
+bottom: 0;
+left: 0;
+width: 100%;
+display: flex;
+z-index: 9999;
+}
+
+.back-btn {
+width: 50%;
+padding: 14px;
+background: #ff4757;
+border: none;
+color: white;
+font-weight: bold;
+}
+
+.reload-btn {
+width: 50%;
+padding: 14px;
+background: linear-gradient(45deg,#667eea,#764ba2);
+border: none;
+color: white;
+font-weight: bold;
+}

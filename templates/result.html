@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="card">
+
+<h3>Question:</h3>
+<p>{{ question }}</p>
+
+<hr>
+
+<h3>AI Answer:</h3>
+
+<div class="ai-answer">
+{{ answer | safe }}
+</div>
+
+</div>
+
+</body>
+</html>
