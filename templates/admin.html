@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 text-white p-6">
+
+<h1 class="text-4xl font-bold mb-10 text-center">
+    ⚙️ Admin Dashboard
+</h1>
+
+<div class="grid md:grid-cols-2 gap-6">
+
+    <!-- USERS -->
+    <a href="/users">
+        <div class="bg-gray-800 p-8 rounded-2xl text-center shadow-lg hover:scale-105 transition cursor-pointer">
+            <h2 class="text-2xl font-bold text-blue-400">👥 Total Users</h2>
+            <p class="text-5xl mt-4 font-bold">{{ total_users }}</p>
+            <p class="text-gray-400 mt-3">Click to view all users</p>
+        </div>
+    </a>
+
+    <!-- LOGS -->
+    <a href="/logs">
+        <div class="bg-gray-800 p-8 rounded-2xl text-center shadow-lg hover:scale-105 transition cursor-pointer">
+            <h2 class="text-2xl font-bold text-green-400">📊 Active Logs</h2>
+            <p class="text-5xl mt-4 font-bold">{{ total_logs }}</p>
+            <p class="text-gray-400 mt-3">Click to view feedback logs</p>
+        </div>
+    </a>
+
+</div>
+
+<!-- ACTION BUTTONS -->
+<div class="mt-12 flex justify-center gap-5">
+
+    <a href="/logs">
+        <button class="bg-blue-600 px-6 py-3 rounded-xl hover:bg-blue-700 transition font-bold shadow-lg">
+            📜 View Logs
+        </button>
+    </a>
+
+    <form action="/delete_logs" method="POST" onsubmit="return confirm('Delete all logs?')">
+        <button class="bg-red-600 px-6 py-3 rounded-xl hover:bg-red-700 transition font-bold shadow-lg">
+            🗑 Delete Logs
+        </button>
+    </form>
+
+</div>
+
+<!-- BACK TO DASHBOARD -->
+<div class="mt-8 text-center">
+    <a href="/dashboard">
+        <button class="bg-yellow-500 text-black px-6 py-3 rounded-xl hover:bg-yellow-400 transition font-bold">
+            ← Back to Dashboard
+        </button>
+    </a>
+</div>
+
+</body>
+</html>
