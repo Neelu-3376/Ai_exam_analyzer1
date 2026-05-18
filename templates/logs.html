@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Logs</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body{
+            background:#0f172a;
+            color:white;
+            font-family:sans-serif;
+        }
+
+        .glass{
+            background:rgba(255,255,255,0.05);
+            border:1px solid rgba(255,255,255,0.1);
+            backdrop-filter:blur(10px);
+        }
+    </style>
+</head>
+
+<body class="p-6">
+
+    <h1 class="text-3xl font-bold text-center text-blue-400 mb-8">
+        📜 Feedback Logs
+    </h1>
+
+    <div class="overflow-x-auto glass rounded-2xl p-5">
+
+        <table class="w-full">
+
+            <thead>
+
+                <tr class="border-b border-white/10 text-left">
+
+                    <th class="p-3">ID</th>
+                    <th class="p-3">Question</th>
+                    <th class="p-3">Message</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for log in logs %}
+
+                <tr class="border-b border-white/5 hover:bg-white/5 transition">
+
+                    <td class="p-3">
+                        {{ log.id }}
+                    </td>
+
+                    <td class="p-3 text-blue-300">
+                        {{ log.question }}
+                    </td>
+
+                    <td class="p-3 text-gray-300">
+                        {{ log.message }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+<!-- BACK BUTTON -->
+<div class="mt-8 text-center">
+    <a href="/admin">
+        <button class="bg-green-600 px-6 py-3 rounded-xl hover:bg-green-700 transition font-bold">
+            ← Back to Admin Dashboard
+        </button>
+    </a>
+</div>
+</body>
+</html>
