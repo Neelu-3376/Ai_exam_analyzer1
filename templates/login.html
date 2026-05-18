@@ -1,25 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="auth-page">
 
-<div class="auth-card">
-    <h2>🎓 AI Exam Analyzer</h2>
+<body class="bg-[#0f172a] text-white flex items-center justify-center min-h-screen p-4">
 
-    <form method="POST" action="/login">
+<div class="bg-white/5 p-8 rounded-3xl border border-white/10 w-full max-w-sm backdrop-blur-md">
 
-        <input type="email" name="email" placeholder="Enter Email" required>
+    <h2 class="text-2xl font-bold mb-6 text-center">Welcome Back</h2>
 
-        <input type="password" name="password" placeholder="Enter Password" required>
+    <form action="/login" method="POST" class="space-y-4">
+        <input type="email" name="email" placeholder="Email" required
+               class="w-full p-3 rounded-xl bg-white/5 border border-white/10 outline-none">
 
-        <button type="submit">Login</button>
+        <input type="password" name="password" placeholder="Password" required
+               class="w-full p-3 rounded-xl bg-white/5 border border-white/10 outline-none">
 
+        <button type="submit" class="w-full bg-indigo-600 py-3 rounded-xl font-bold">
+            Sign In
+        </button>
     </form>
 
-    <p><a href="/register">Register</a></p>
+    <p class="mt-4 text-center text-sm text-gray-400">
+        New student? <a href="/signup" class="text-blue-400">Create Account</a>
+    </p>
+
+    <!-- BACK BUTTON -->
+    <div class="text-center mt-5">
+        <a href="/">
+            <button class="bg-gray-700 px-5 py-2 rounded-xl hover:bg-gray-600 transition">
+                ← Back to Home
+            </button>
+        </a>
+    </div>
+
 </div>
 
 </body>
