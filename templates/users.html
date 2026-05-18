@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Users</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-900 text-white p-6">
+
+<h1 class="text-3xl font-bold text-center text-blue-400 mb-8">
+    👥 Registered Users
+</h1>
+
+<div class="overflow-x-auto bg-gray-800 rounded-2xl p-5">
+
+    <table class="w-full">
+
+        <thead>
+
+            <tr class="border-b border-white/10 text-left">
+
+                <th class="p-3">ID</th>
+                <th class="p-3">Name</th>
+                <th class="p-3">Email</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for user in users %}
+
+            <tr class="border-b border-white/5 hover:bg-white/5">
+
+                <td class="p-3">{{ user.id }}</td>
+
+                <td class="p-3">{{ user.name }}</td>
+
+                <td class="p-3 text-blue-300">
+                    {{ user.email }}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+<!-- BACK BUTTON -->
+<div class="mt-8 text-center">
+    <a href="/admin">
+        <button class="bg-blue-600 px-6 py-3 rounded-xl hover:bg-blue-700 transition font-bold">
+            ← Back to Admin Dashboard
+        </button>
+    </a>
+</div>
+</body>
+</html>
