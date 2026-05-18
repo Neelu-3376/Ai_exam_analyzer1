@@ -1,36 +1,400 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-EDU Analyzer | Smart Dashboard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+
+        body{
+            background-color:#050b1a;
+            color:#e2e8f0;
+            font-family:'Inter',sans-serif;
+            overflow-x:hidden;
+        }
+
+        .glass{
+            background:rgba(30,41,59,0.7);
+            border:1px solid rgba(255,255,255,0.1);
+            backdrop-filter:blur(16px);
+        }
+
+        .hidden{
+            display:none !important;
+        }
+
+        .active-tab{
+            background:#2563eb !important;
+            border-color:#60a5fa !important;
+            box-shadow:0 0 15px rgba(37,99,235,0.4);
+        }
+
+        .fade-in{
+            animation:fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn{
+            from{
+                opacity:0;
+                transform:translateY(10px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        ::-webkit-scrollbar{
+            width:5px;
+            height:5px;
+        }
+
+        ::-webkit-scrollbar-thumb{
+            background:#1e293b;
+            border-radius:10px;
+        }
+
+        /* PDF LOADER */
+        #pdf-loader{
+            transition:0.3s;
+        }
+
+    </style>
 </head>
 
-<body onload="updateSubjects()">
+<body class="min-h-screen pb-20">
 
-<div class="card">
+<!-- NAVBAR -->
+<nav class="sticky top-0 z-40 p-4 glass border-b border-white/5 mb-6">
 
-<form action="/questions" method="get">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
 
-<select name="semester" id="semester" onchange="updateSubjects()">
-<option value="5">Sem 5</option>
-<option value="6">Sem 6</option>
-</select>
+        <h1 class="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            AI ANALYZER
+        </h1>
 
-<select name="subject" id="subject">
-</select>
+        <div class="flex items-center gap-3">
 
-<select name="unit">
-<option value="1">Unit 1</option>
-<option value="2">Unit 2</option>
-<option value="3">Unit 3</option>
-<option value="4">Unit 4</option>
-<option value="5">Unit 5</option>
-</select>
+            {% if session.user == "rashmivishwakarma613@gmail.com" %}
 
-<button type="submit">Continue</button>
+            <a href="/admin"
+            class="text-[10px] uppercase tracking-widest bg-amber-500/20 text-amber-500 border border-amber-500/30 px-3 py-1.5 rounded-full font-bold">
 
-</form>
+                Admin Panel
+
+            </a>
+
+            {% endif %}
+
+            <a href="/admin">
+
+                <button
+                class="bg-blue-600 text-white px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-blue-700 transition">
+
+                    ⚙️ Admin
+
+                </button>
+
+            </a>
+
+            <a href="/logout"
+            class="bg-red-500/10 text-red-500 border border-red-500/20 px-4 py-1.5 rounded-lg text-sm font-medium hover:bg-red-500 hover:text-white transition">
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- MAIN -->
+<main class="max-w-4xl mx-auto px-4">
+
+    <!-- YEAR SCREEN -->
+    <div id="year-screen" class="space-y-8 fade-in">
+
+        <div class="text-center">
+
+            <h2 class="text-3xl font-extrabold text-white">
+                Academic Path
+            </h2>
+
+            <p class="text-gray-400 mt-2">
+                Select your current year to begin analysis
+            </p>
+
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+            <button
+            onclick="showSemesters(1)"
+            class="p-8 glass rounded-2xl hover:border-blue-500 transition-all group">
+
+                <span class="block text-3xl mb-2 group-hover:scale-110 transition">
+                    🎓
+                </span>
+
+                <span class="text-xl font-bold">
+                    1st Year
+                </span>
+
+            </button>
+
+            <button
+            onclick="showSemesters(2)"
+            class="p-8 glass rounded-2xl hover:border-blue-500 transition-all group">
+
+                <span class="block text-3xl mb-2 group-hover:scale-110 transition">
+                    ⚡
+                </span>
+
+                <span class="text-xl font-bold">
+                    2nd Year
+                </span>
+
+            </button>
+
+            <button
+            onclick="showSemesters(3)"
+            class="p-8 glass rounded-2xl hover:border-blue-500 transition-all group">
+
+                <span class="block text-3xl mb-2 group-hover:scale-110 transition">
+                    🚀
+                </span>
+
+                <span class="text-xl font-bold">
+                    3rd Year
+                </span>
+
+            </button>
+
+            <button
+            onclick="showSemesters(4)"
+            class="p-8 glass rounded-2xl hover:border-blue-500 transition-all group">
+
+                <span class="block text-3xl mb-2 group-hover:scale-110 transition">
+                    🏆
+                </span>
+
+                <span class="text-xl font-bold">
+                    4th Year
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- SEM SCREEN -->
+    <div id="sem-screen" class="hidden space-y-6 fade-in">
+
+        <button
+        onclick="switchScreen('year-screen')"
+        class="flex items-center text-blue-400 hover:text-blue-300">
+
+            ← Change Year
+
+        </button>
+
+        <h2 class="text-2xl font-bold text-white text-center">
+            Choose Semester
+        </h2>
+
+        <div id="sem-buttons" class="grid grid-cols-2 gap-4"></div>
+
+    </div>
+
+    <!-- SUBJECT SCREEN -->
+    <div id="subject-screen" class="hidden space-y-6 fade-in">
+
+        <button
+        onclick="switchScreen('sem-screen')"
+        class="flex items-center text-blue-400 hover:text-blue-300">
+
+            ← Back
+
+        </button>
+
+        <h2 class="text-2xl font-bold text-white">
+            Current Subjects
+        </h2>
+
+        <div id="subject-list" class="grid gap-4"></div>
+
+    </div>
+
+    <!-- UNIT SCREEN -->
+    <div id="unit-screen" class="hidden space-y-6 fade-in">
+
+        <!-- TOP BAR -->
+        <div class="flex flex-wrap gap-3 justify-between items-center">
+
+            <!-- BACK -->
+            <button onclick="switchScreen('subject-screen')"
+                class="text-blue-400 font-semibold">
+                ← Change Subject
+            </button>
+
+            <!-- RIGHT BUTTONS -->
+            <div class="flex flex-wrap gap-2">
+
+                <!-- EXAM HITS -->
+                <button onclick="loadImportant()"
+                    class="bg-gradient-to-r from-orange-500 to-red-600 px-4 py-2 rounded-xl font-bold text-sm shadow-lg shadow-orange-500/20 active:scale-95 transition">
+
+                    🔥 Exam Hits
+
+                </button>
+
+                <!-- PYQ BUTTON -->
+                <a id="pyq-link" target="_blank">
+
+                    <button
+                        class="bg-yellow-500 text-black px-4 py-2 rounded-xl font-bold text-sm hover:bg-yellow-400 transition">
+
+                        📚 PYQs
+
+                    </button>
+
+                </a>
+
+                <!-- PDF BUTTON -->
+<!-- PDF BUTTON -->
+<button
+    id="pdf-btn"
+    onclick="downloadPDF()"
+    class="bg-green-600 px-5 py-2 rounded-xl font-bold hover:bg-green-700 transition">
+
+    📄 Download PDF
+
+</button>
+
+            </div>
+
+        </div>
+
+        <!-- SUBJECT -->
+        <div class="glass p-4 rounded-2xl">
+
+            <h2 id="current-subject-title"
+            class="text-xl font-bold text-blue-300 mb-4 truncate">
+
+                Loading...
+
+            </h2>
+
+            <div id="unit-list"
+            class="grid grid-cols-3 sm:grid-cols-5 gap-2">
+
+            </div>
+
+        </div>
+
+        <!-- QUESTIONS -->
+        <div id="questions-container"
+        class="space-y-4 min-h-[300px]">
+
+            <div class="flex flex-col items-center justify-center py-20 text-gray-500">
+
+                <span class="text-4xl mb-4">
+                    👆
+                </span>
+
+                <p>
+                    Tap on a Unit to reveal questions
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<!-- PDF Loading Overlay -->
+<div id="pdf-loader"
+class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center">
+
+    <!-- Spinner -->
+    <div class="w-20 h-20 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-6"></div>
+
+    <!-- Text -->
+    <h2 class="text-3xl font-bold text-white mb-2">
+        Generating PDF...
+    </h2>
+
+    <p class="text-gray-400 text-sm animate-pulse mb-6">
+        AI is preparing smart notes for you 📚
+    </p>
+
+    <!-- Fake Progress -->
+    <div class="w-64 h-3 bg-slate-700 rounded-full overflow-hidden">
+
+        <div class="h-full bg-gradient-to-r from-blue-500 to-cyan-400 animate-pulse w-full"></div>
+
+    </div>
 
 </div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<script>
+
+function downloadPDF(){
+
+    // CHECK URL
+    if(!window.pdfUrl){
+
+        alert("Please select a unit first");
+
+        return;
+    }
+
+    // SHOW LOADER
+    document
+    .getElementById('pdf-loader')
+    .classList.remove('hidden');
+
+    // START DOWNLOAD
+    const link = document.createElement('a');
+
+    link.href = window.pdfUrl;
+
+    link.download = '';
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+    // HIDE LOADER
+    setTimeout(() => {
+
+        document
+        .getElementById('pdf-loader')
+        .classList.add('hidden');
+
+    }, 8000);
+}
+
+</script>
+
+</body>
+</html>
 </body>
 </html>
